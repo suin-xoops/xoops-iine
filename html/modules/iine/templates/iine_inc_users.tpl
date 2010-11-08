@@ -4,16 +4,18 @@
 <h3 class="iine_title"><{$smarty.const._MD_IINE_LANG_USERS}></h3>
 <div class="iine_users_body">
 <{foreach from=$voters item=voter name=voters}>
-<div class="<{cycle values="odd,even"}>" style="float:left; margin:5px; width:80px; text-align:center;">
+<div class="<{cycle values="odd,even"}>" style="float:left; margin:5px; width:80px; height:110px; text-align:center;">
 <a href="<{$xoops_url}>/userinfo.php?uid=<{$voter.uid}>">
-<img src="<{$voter.uid|xoops_user_avatarize}>" width="80" />
+<img src="<{$voter.avatar.url}>" width="<{$voter.avatar.width.resized}>" height="<{$voter.avatar.height.resized}>" />
 </a>
-<br />
+<div style="white-space:nowrap">
 <a href="<{$xoops_url}>/userinfo.php?uid=<{$voter.uid}>">
 <{$smarty.const._MD_IINE_LANG_SAN|sprintf:$voter.uname}>
 </a>
-<br />
+</div>
+<div>
 <span style="font-size:0.7em;"><{$voter.created|xoops_formattimestamp:'Y.m.d'}></span>
+</div>
 </div>
 <{foreachelse}>
 <div class="<{cycle values="odd,even"}>" style="float:left; margin:5px; width:80px; text-align:left;">

@@ -49,17 +49,6 @@ header('Expires: '.gmdate('D, d M Y H:i:s', time() + 60 * 60 * 24 * 7).' GMT');
 
 			if ( data == 'voted' || data == 'unvoted' ) {
 
-<? if ( isset($_GET['EUC']) ) : ?>
-					/*
-					  * If the encoding of your xoops is not UTF-8, 
-					  * please make below activate and change, if you need, the charset.
-					  */
-
-					jQuery().ajaxSend(function(event, XMLHttpRequest, options){
-						XMLHttpRequest.overrideMimeType("text/plain; charset=euc-jp");
-					});
-<? endif ?>
-
 					$("#iineButton form").load("<?=XOOPS_URL?>/modules/iine/index.php?action=button&dirname="+dirname+"&id="+id+"&url="+url+" #iine_form");
 					$("#iine_users").load("<?=XOOPS_URL?>/modules/iine/index.php?action=users&dirname="+dirname+"&id="+id+" #iine_voters");
 

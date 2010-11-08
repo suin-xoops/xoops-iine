@@ -20,12 +20,40 @@ function iine_print_users($params)
 	$db =& $root->mController->mDB;
 
 	// make query to get voted users
-	$sql = sprintf("SELECT v.created, v.ip, u.uid, u.uname FROM `%s` v, `%s` u WHERE v.`content_id` = '%u' AND v.`dirname` = '%s' AND u.`level` > 0 AND v.`uid` = u.`uid`",
+	$sql = sprintf("SELECT v.created, v.ip, u.uid, u.uname, u.user_avatar FROM `%s` v, `%s` u WHERE v.`content_id` = '%u' AND v.`dirname` = '%s' AND u.`level` > 0 AND v.`uid` = u.`uid`",
 		$db->prefix('iine_votes'), $db->prefix('users'), intval($targetId), mysql_real_escape_string($targetDirname));
 	$voters = array();
 	$recource = $db->query($sql);
 	while( $voter = $db->fetchArray($recource) ) {
 		$voter['uname'] = htmlspecialchars($voter['uname']);
+
+		$avatarFilePath = XOOPS_UPLOAD_PATH . '/' . $voter['user_avatar'];
+
+		if ( $voter['user_avatar'] != 'blank.gif' and file_exists($avatarFilePath) ) {
+			$avatarFileUrl = XOOPS_UPLOAD_URL . '/' . $voter['user_avatar'];
+			list($width, $height, $type, $attr) = getimagesize($avatarFilePath);
+		} else {
+			$avatarFileUrl = XOOPS_URL . '/modules/user/images/no_avatar.gif';
+			list($width, $height, $type, $attr) = getimagesize($avatarFilePath);
+		}
+
+		$voter['avatar'] = array();
+		$voter['avatar']['url'] = $avatarFileUrl;
+		
+		if ( $width > $height ) {
+			$voter['avatar']['width']['resized'] = 80;
+			$voter['avatar']['height']['resized'] = intval((80 * $height) / $width);
+		} elseif ( $width < $height ) {
+			$voter['avatar']['width']['resized'] = intval((80 * $width) / $height);
+			$voter['avatar']['height']['resized'] = 80;
+		} else {
+			$voter['avatar']['width']['resized'] = 80;
+			$voter['avatar']['height']['resized'] = 80;
+		}
+		
+		$voter['avatar']['width']['real'] = $width;
+		$voter['avatar']['height']['real'] = $height;
+		
 		$voters[] = $voter;
 	}
 

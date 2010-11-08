@@ -76,7 +76,12 @@ class Iine_Action
 	function voteByAjax()
 	{
 		$this->mByAjax = true;
+		$this->_obStart();
 		$this->vote();
+		$content = $this->_obEnd();
+		$this->_encodeToUtf8($contents);
+		echo $content;
+
 	}
 
 	function button()
@@ -91,7 +96,11 @@ class Iine_Action
 			'url' => trim($this->mRoot->mContext->mRequest->getRequest('url')),
 		);
 
+		$this->_obStart();
 		iine_print_button($params);
+		$content = $this->_obEnd();
+		$this->_encodeToUtf8($contents);
+		echo $content;
 	}
 
 	function users()
@@ -105,7 +114,11 @@ class Iine_Action
 			'id' => intval($this->mRoot->mContext->mRequest->getRequest('id')),
 		);
 
+		$this->_obStart();
 		iine_print_users($params);
+		$content = $this->_obEnd();
+		$this->_encodeToUtf8($contents);
+		echo $content;
 	}
 
 	function jquery()
@@ -192,6 +205,26 @@ class Iine_Action
 	{
 		if ( $this->mByAjax ) exit($message);
 		$this->mRoot->mController->executeRedirect($url, $sec, $message);
+	}
+
+	function _encodeToUtf8(&$msg)
+	{
+		if ( defined('_CHARSET') and _CHARSET != 'UTF-8' ) {
+			$msg = mb_convert_encoding($msg, 'UTF-8', _CHARSET);
+		}
+		return $msg;
+	}
+
+	function _obStart()
+	{
+		ob_start();
+	}
+
+	function _obEnd()
+	{
+		$content = ob_get_contents();
+		ob_end_clean();
+		return $content;
 	}
 }
 ?>

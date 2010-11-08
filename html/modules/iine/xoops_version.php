@@ -3,7 +3,7 @@ $mydirname = basename(dirname(__FILE__));
 $modversion['name'] = _MI_IINE_NAME;
 $modversion['description'] = _MI_IINE_DESC;
 $modversion['dirname'] = $mydirname;
-$modversion['version'] = '1.03';
+$modversion['version'] = '1.05';
 $modversion['credits'] = '';
 $modversion['author'] = 'Suin';
 $modversion['license'] = 'GPL see LICENSE';
@@ -14,6 +14,8 @@ $modversion['hasAdmin'] = 0;
 $modversion['hasMain'] = 1;
 
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
+// Tables created by sql file
+$modversion['tables'][0] = "iine_votes";
 
 $modversion['templates'][1]['file'] = 'iine_inc_button.tpl';
 $modversion['templates'][1]['description'] = 'Display Iine button.';
