@@ -11,9 +11,9 @@ class Iine_AssignXoopsModuleHeader extends XCube_ActionFilter
 
 	function hook(&$xoopsTpl)
 	{
-		$jQueryLink = '<script type="text/javascript" src="'.XOOPS_URL.'/modules/iine/jquery-1.2.6.min.js"></script>';
-		$jQueryLink .= '<script type="text/javascript" src="'.XOOPS_URL.'/modules/iine/index.php?action=jquery"></script>';
-		$xoopsTpl->assign('xoops_module_header', $xoopsTpl->get_template_vars('xoops_module_header').$jQueryLink);
+		$jQueryLink = '<script type="text/javascript" src="'.XOOPS_URL.'/modules/iine/jquery-1.2.6.min.js"></script>'."\n";
+		$jQueryLink .= '<script type="text/javascript" src="'.XOOPS_URL.'/modules/iine/jquery.php"></script>'."\n";
+		$xoopsTpl->assign('xoops_module_header', $jQueryLink.$xoopsTpl->get_template_vars('xoops_module_header'));
 	}
 }
 
